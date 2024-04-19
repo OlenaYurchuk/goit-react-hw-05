@@ -1,5 +1,10 @@
-export default function HomePage() {
+import TrendingMoviesList from '../../components/TrendingMoviesList/TrendingMoviesList';
+
+export default function HomePage({ movies }) {
   return (
-    <div></div>
+    <div>
+      <p>Trending today</p>
+      <TrendingMoviesList movies={movies} />
+    </div>
   )
 }
