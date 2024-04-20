@@ -14,3 +14,4 @@ export const fetchTrendingMovies = async () => {
   const response = axios.get(url, options);
   return (await response).data.results;
 }
+

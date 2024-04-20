@@ -1,6 +1,10 @@
+import { Link, Outlet, useParams } from "react-router-dom"
+
 export default function MovieDetailsPage({ movie: { poster_path, title, vote_average, overview, genre_ids } }) {
+  const id = useParams();
+  console.log(id)
   return (
-    <div>
+    <main>
       <button type="button">Go back</button>
       <div>
         <img src={poster_path} alt={title} />
@@ -18,6 +22,15 @@ export default function MovieDetailsPage({ movie: { poster_path, title, vote_ave
           </ul>
         </div>
       </div>
-    </div>
+      <ul>
+        <li>
+          <Link to={`/movies/${id}/cast`}>Cast</Link>
+        </li>
+        <li>
+          <Link to={`/movies/${id}/reviews`}>Review</Link>
+        </li>
+      </ul>
+      <Outlet />
+    </main>
   )
 }
