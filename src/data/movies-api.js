@@ -15,3 +15,18 @@ export const fetchTrendingMovies = async () => {
   return (await response).data.results;
 }
 
+export const fetchMovies = async (searchQuery) => {
+  const url = '/3/search/movie?';
+ 
+  const options = {
+    headers: {
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjOGM2ODJlNTIzNjExYzExNGE3ODFmYzBhM2EwOWYzOSIsInN1YiI6IjY2MjIzMGI1ZTRiNTc2MDE3ZGJkM2NkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Ptg4psbgoj3NRxTnzloY8VvlY3PbqxvtmHy5KcahbXQ'
+    },
+    params: {
+      query: searchQuery
+    }
+  };
+  
+  const response = axios.get(url, options);
+  return response.data.results;
+}

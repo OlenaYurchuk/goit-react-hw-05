@@ -1,11 +1,21 @@
-import { Link, Outlet, useParams } from "react-router-dom"
+import { Link, Outlet, useParams, useNavigate } from "react-router-dom"
 
-export default function MovieDetailsPage({ movie: { poster_path, title, vote_average, overview, genre_ids } }) {
-  const id = useParams();
-  console.log(id)
+export default function MovieDetailsPage() {
+  const { id, poster_path, title, vote_average, overview, genre_ids } = useParams();
+  console.log('ID:', id)
+  console.log('title:', title)
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  }
+
+  // const genres = () => {
+  //   return genre_ids.map(genreId => <span key={genreId}>{genreId}</span>)
+  // }
   return (
     <main>
-      <button type="button">Go back</button>
+      <button type="button" onClick={goBack}>Go back</button>
       <div>
         <img src={poster_path} alt={title} />
         <div>
@@ -15,11 +25,7 @@ export default function MovieDetailsPage({ movie: { poster_path, title, vote_ave
           <p>Overview</p>
           <h4>{overview}</h4>
           <p>Genres</p>
-          <ul>
-            {genre_ids.map((genre, index) => (
-              <li key={index}>{genre}</li>
-            ))}
-          </ul>
+          <p>{genre_ids}</p>
         </div>
       </div>
       <ul>
