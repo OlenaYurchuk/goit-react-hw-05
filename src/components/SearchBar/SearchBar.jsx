@@ -3,7 +3,6 @@ import { Toaster, toast } from 'react-hot-toast';
 import css from './SearchBar.module.css'
 
 export default function SearchBar({ onSearch }) {
-  console.log(onSearch)
   return (
     <div>
       <Toaster />

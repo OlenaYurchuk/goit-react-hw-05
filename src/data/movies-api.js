@@ -11,8 +11,8 @@ export const fetchTrendingMovies = async () => {
     }
   };
   
-  const response = axios.get(url, options);
-  return (await response).data.results;
+  const response = await axios.get(url, options);
+  return response.data.results;
 }
 
 export const fetchMovies = async (searchQuery) => {
@@ -27,6 +27,6 @@ export const fetchMovies = async (searchQuery) => {
     }
   };
   
-  const response = axios.get(url, options);
+  const response = await axios.get(url, options);
   return response.data.results;
 }
