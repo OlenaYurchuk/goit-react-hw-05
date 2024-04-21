@@ -1,5 +1,5 @@
 export default function ErrorMessage() {
   return (
-    <p>Opps, something went wrong...</p>
+    <p>❌ Something went wrong</p>
   )
 }

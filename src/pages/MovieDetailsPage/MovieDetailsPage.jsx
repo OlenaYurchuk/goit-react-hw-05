@@ -1,23 +1,54 @@
+import { useEffect, useState } from "react";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom"
+import { fetchMovieDetails } from "../../data/movies-api";
+import Loader from "../../components/Loader/Loader";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import MovieCast from "../../components/MovieCast/MovieCast";
+import MovieReviews from "../../components/MovieReviews/MovieReviews";
 
 export default function MovieDetailsPage() {
-  const { id, poster_path, title, vote_average, overview, genre_ids } = useParams();
-  console.log('ID:', id)
-  console.log('title:', title)
+  const { id } = useParams();
+  const [movieDetails, setMovieDetails] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchDetails() {
+      try {
+        setIsLoading(true);
+        const details = await fetchMovieDetails(id);
+        setMovieDetails(details);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchDetails();
+  }, [id])
 
   const goBack = () => {
     navigate(-1);
   }
 
-  // const genres = () => {
-  //   return genre_ids.map(genreId => <span key={genreId}>{genreId}</span>)
-  // }
+  const { title, poster_path, vote_average, overview, genres } = movieDetails;
+
+  const genresList = () => {
+    if (!genres || genres.length === 0) {
+      return null;
+    }
+    return genres.map(genre => <li key={genre.id}>{genre.name}</li>)
+  }
   return (
+
     <main>
       <button type="button" onClick={goBack}>Go back</button>
+      {isLoading && <Loader />}
+      {error && <ErrorMessage />}
       <div>
-        <img src={poster_path} alt={title} />
+        <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={title} />
         <div>
           <h2>{title}</h2>
           <p>User Score: {vote_average}</p>
@@ -25,7 +56,7 @@ export default function MovieDetailsPage() {
           <p>Overview</p>
           <h4>{overview}</h4>
           <p>Genres</p>
-          <p>{genre_ids}</p>
+          <ul>{genresList()}</ul>
         </div>
       </div>
       <ul>
@@ -37,6 +68,8 @@ export default function MovieDetailsPage() {
         </li>
       </ul>
       <Outlet />
+      <MovieCast movieId={id} />
+      <MovieReviews movieId={id} />
     </main>
   )
 }
