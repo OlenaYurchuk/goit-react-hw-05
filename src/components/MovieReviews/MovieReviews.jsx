@@ -29,7 +29,7 @@ export default function MovieReviews({ movieId }) {
     <div>
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
-      {/* <h3>Movie Review</h3> */}
+      {reviews === null && <p>No reviews information available</p>}
       <ul>
         {reviews.map((review) => (
           <li key={review.id}>

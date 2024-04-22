@@ -29,10 +29,10 @@ export default function MovieCast({ movieId }) {
     <div>
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
-      {/* {cast.length === 0 && <p>No cast information available</p>} */}
+      {cast === null && <p>No cast information available</p>}
       <ul>
-        {cast.filter(actor => actor.profile_path).map((actor) => (
-          <li key={actor.id}>
+        {cast.filter(actor => actor.profile_path).map((actor, index) => (
+          <li key={`${actor.id}-${index}`}>
             <img src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
             <p>{actor.name}</p>
             <p>Character: {actor.character}</p>

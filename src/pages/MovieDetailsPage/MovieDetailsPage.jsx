@@ -12,7 +12,7 @@ export default function MovieDetailsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showMovieCast, setShowMovieCast] = useState(false);
-  const [showMovieReview, setMovieReview] = useState(false)
+  const [showMovieReview, setShowMovieReview] = useState(false)
 
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ export default function MovieDetailsPage() {
   }
 
   const toggleMovieReview = () => {
-    setMovieReview(prevState => !prevState)
+    setShowMovieReview(prevState => !prevState)
   }
   return (
 
