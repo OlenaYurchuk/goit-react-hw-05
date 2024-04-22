@@ -11,6 +11,8 @@ export default function MovieDetailsPage() {
   const [movieDetails, setMovieDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showMovieCast, setShowMovieCast] = useState(false);
+  const [showMovieReview, setMovieReview] = useState(false)
 
   const navigate = useNavigate();
 
@@ -41,6 +43,14 @@ export default function MovieDetailsPage() {
     }
     return genres.map(genre => <li key={genre.id}>{genre.name}</li>)
   }
+
+  const toggleMovieCast = () => {
+    setShowMovieCast(prevState => !prevState)
+  }
+
+  const toggleMovieReview = () => {
+    setMovieReview(prevState => !prevState)
+  }
   return (
 
     <main>
@@ -52,24 +62,23 @@ export default function MovieDetailsPage() {
         <div>
           <h2>{title}</h2>
           <p>User Score: {vote_average}</p>
-          <h3></h3>
-          <p>Overview</p>
-          <h4>{overview}</h4>
-          <p>Genres</p>
+          <h3>Overview</h3>
+          <p>{overview}</p>
+          <h3>Genres</h3>
           <ul>{genresList()}</ul>
         </div>
       </div>
       <ul>
         <li>
-          <Link to={`/movies/${id}/cast`}>Cast</Link>
+          <Link to={`/movies/${id}/cast`} onClick={toggleMovieCast}>Cast</Link>
         </li>
         <li>
-          <Link to={`/movies/${id}/reviews`}>Review</Link>
+          <Link to={`/movies/${id}/reviews`} onClick={toggleMovieReview}>Review</Link>
         </li>
       </ul>
       <Outlet />
-      <MovieCast movieId={id} />
-      <MovieReviews movieId={id} />
+      {showMovieCast && <MovieCast movieId={id} />}
+      {showMovieReview && <MovieReviews movieId={id} />}
     </main>
   )
 }
