@@ -1,5 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import { Toaster, toast } from 'react-hot-toast';
+import { FiSearch } from "react-icons/fi";
 import css from './SearchBar.module.css'
 
 export default function SearchBar({ onSearch }) {
@@ -26,7 +27,9 @@ export default function SearchBar({ onSearch }) {
             autoComplete="off"
             autoFocus
           />
-          <button className={css.btn} type="submit">Search</button>
+          <button className={css.btn} type="submit">
+            <FiSearch size="16px" />
+          </button>
         </Form>
       </Formik>
     </div>

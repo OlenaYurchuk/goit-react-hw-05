@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom"
-import { nanoid } from "nanoid"
+import { Link } from "react-router-dom";
+import { nanoid } from "nanoid";
+import { BiCameraMovie } from "react-icons/bi";
 
 export default function TrendingMoviesList({ movies }) {
   return (
@@ -7,7 +8,8 @@ export default function TrendingMoviesList({ movies }) {
       {
         movies && movies.map((movie) => (
           <li key={nanoid()}>
-            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+            <BiCameraMovie />
+            <Link to={`/movies/${movie.id}`}> {movie.title}</Link>
           </li>
         ))
       }

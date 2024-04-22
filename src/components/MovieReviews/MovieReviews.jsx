@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { fetchMovieReview } from "../../data/movies-api";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import { fetchMovieReview } from "../../data/movies-api";
+import Text from "../Text/Text";
+import css from "../MovieReviews/MovieReviews.module.css";
+
 
 export default function MovieReviews({ movieId }) {
   const [reviews, setReview] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(false);
   useEffect(() => {
     if (!movieId) return;
-
     const getMovieReview = async () => {
       setIsLoading(true);
       try {
         const reviewsData = await fetchMovieReview(movieId);
+        if (reviewsData.length === 0) {
+          setIsEmpty(true);
+          return;
+        }
         setReview(reviewsData);
       } catch (error) {
         setError(error);
@@ -25,18 +32,18 @@ export default function MovieReviews({ movieId }) {
   }, [movieId])
 
   return (
-    <div>
+    <div className={css.wrap}>
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
-      {reviews.length === 0 && <p>No reviews information available</p>}
-      <ul>
+      <ul className={css.list}>
         {reviews.map((review) => (
-          <li key={review.id}>
-            <p>Author: {review.author}</p>
-            <p>{review.content}</p>
+          <li className={css.item} key={review.id}>
+            <p className={css.author}>Author: <span className={css.name}>{review.author}</span></p>
+            <p className={css.content}>{review.content}</p>
           </li>
         ))}
       </ul>
+      {isEmpty && <Text textAlign="center"> Sorry. No reviews information available ... 😭</Text>}
     </div>
   )
 }

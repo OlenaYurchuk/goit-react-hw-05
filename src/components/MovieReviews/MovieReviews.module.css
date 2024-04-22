@@ -1,0 +1,31 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 0;
+  border-bottom: 1px solid black;
+}
+
+.author {
+  font-weight: bold;
+  margin-left: 0;
+}
+
+.name {
+  font-weight: normal;
+}
+
+.content {
+  margin-bottom: 10px;
+  margin-left: 0;
+}

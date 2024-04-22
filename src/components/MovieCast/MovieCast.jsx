@@ -2,18 +2,25 @@ import { useEffect, useState } from "react";
 import { fetchMovieCast } from "../../data/movies-api";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import Text from "../Text/Text";
+import css from "../MovieCast/MovieCast.module.css"
 
 export default function MovieCast({ movieId }) {
   const [cast, setCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
+    if (!movieId) return;
     const getMovieCast = async () => {
-      if (!movieId) return;
       setIsLoading(true);
       try {
         const castData = await fetchMovieCast(movieId);
+        if (castData.length === 0) {
+          setIsEmpty(true);
+          return;
+        }
         setCast(castData);
       } catch (error) {
         setError(error);
@@ -25,20 +32,21 @@ export default function MovieCast({ movieId }) {
   }, [movieId])
 
   return (
-    <div>
+    <div className={css.wrap}>
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
-      {cast.length === 0 && <p>No cast information available</p>}
-      <ul>
+      <ul className={css.list}>
         {cast.filter(actor => actor.profile_path).map((actor, index) => (
-          <li key={`${actor.id}-${index}`}>
-            <>
-              <img src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
-              <p>{actor.name}</p>
-              <p>Character: {actor.character}</p></>
+          <li className={css.item} key={`${actor.id}-${index}`}>
+            <img className={css.img} src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
+            <div className={css.content}>
+              <p className={css.name}>{actor.name}</p>
+              <p className={css.character}>Character: <span className={css.role}>{actor.character}</span></p>
+            </div>
           </li>
         ))}
       </ul>
+      {isEmpty && <Text textAlign="center"> Sorry. No cast information available ... 😭</Text>}
     </div>
   )
 }

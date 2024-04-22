@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import { fetchMovies } from '../../data/movies-api'
-import SearchBar from "../../components/SearchBar/SearchBar"
-import MovieList from "../../components/MovieList/MovieList"
-import Loader from "../../components/Loader/Loader"
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
-import Text from '../../components/Text/Text'
-import Button from "../../components/Button/Button"
+import { useEffect, useState } from "react";
+import { fetchMovies } from "../../data/movies-api";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import MovieList from "../../components/MovieList/MovieList";
+import Loader from "../../components/Loader/Loader";
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import Text from "../../components/Text/Text";
+import Button from "../../components/Button/Button";
+import css from "../MoviesPage/MoviesPage.module.css";
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
@@ -52,7 +53,7 @@ export default function MoviesPage() {
   }
 
   return (
-    <div>
+    <div className={css.container}>
       <SearchBar onSearch={onHandleSubmit} />
       {movies.length && < MovieList movies={movies} />}
       {isVisible && <Button onClick={handleClick} disabled={isLoading}>{isLoading ? 'loading' : 'loadmore'}</Button>}
@@ -60,7 +61,6 @@ export default function MoviesPage() {
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
       {isEmpty && <Text textAlign="center">Sorry. There are no movies ... 😭</Text>}
-
     </div>
   )
 }

@@ -4,7 +4,8 @@ import TrendingMoviesList from '../../components/TrendingMoviesList/TrendingMovi
 import Loader from '../../components/Loader/Loader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Button from '../../components/Button/Button';
-import Text from '../../components/Text/Text'
+import Text from '../../components/Text/Text';
+import css from "../HomePage/HomePage.module.css";
 
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
@@ -39,8 +40,8 @@ export default function HomePage() {
   }
 
   return (
-    <div>
-      <p>Trending today</p>
+    <div className={css.wrap}>
+      <h2 className={css.title}>Trending today</h2>
       {movies.length && <TrendingMoviesList movies={movies} />}
       {isVisible && <Button onClick={handleClick} disabled={isLoading}>{isLoading ? 'loading' : 'loadmore'}</Button>}
       {isLoading && <Loader />}
