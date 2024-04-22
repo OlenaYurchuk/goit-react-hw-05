@@ -31,28 +31,14 @@ export default function MovieDetailsPage() {
     fetchDetails();
   }, [id])
 
-  const goBack = () => {
-    navigate(-1);
-  }
+  const goBack = () => navigate(-1);
+
 
   const { title, poster_path, vote_average, overview, genres } = movieDetails;
 
-  const genresList = () => {
-    if (!genres || genres.length === 0) {
-      return null;
-    }
-    return genres.map(genre => <li key={genre.id}>{genre.name}</li>)
-  }
-
-  const toggleMovieCast = () => {
-    setShowMovieCast(prevState => !prevState)
-  }
-
-  const toggleMovieReview = () => {
-    setShowMovieReview(prevState => !prevState)
-  }
+  const toggleMovieCast = () => setShowMovieCast(prevState => !prevState)
+  const toggleMovieReview = () => setShowMovieReview(prevState => !prevState)
   return (
-
     <main>
       <button type="button" onClick={goBack}>Go back</button>
       {isLoading && <Loader />}
@@ -65,7 +51,11 @@ export default function MovieDetailsPage() {
           <h3>Overview</h3>
           <p>{overview}</p>
           <h3>Genres</h3>
-          <ul>{genresList()}</ul>
+          {genres && genres.length > 0 ? (
+            <ul>{genres.map(genre => <li key={genre.id}>{genre.name}</li>)}</ul>
+          ) : (
+            <p>Genres not available</p>
+          )}
         </div>
       </div>
       <ul>

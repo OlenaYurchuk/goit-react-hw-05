@@ -21,17 +21,16 @@ export default function MoviesPage() {
     const getMovies = async () => {
       setIsLoading(true);
       try {
-        const { results, total_results, per_page } = await fetchMovies(query, page);
+        const { results, total_pages } = await fetchMovies(query, page);
 
         if (results.length === 0) {
           setIsEmpty(true);
           return;
         }
         setMovies((prevMovies) => [...prevMovies, ...results]);
-        setIsVisible(page < Math.ceil(total_results / per_page))
-
+        setIsVisible(page < total_pages)
       } catch (error) {
-        setError(error.message);
+        setError(error);
       } finally {
         setIsLoading(false);
       }
@@ -55,11 +54,11 @@ export default function MoviesPage() {
   return (
     <div>
       <SearchBar onSearch={onHandleSubmit} />
+      {movies.length && < MovieList movies={movies} />}
+      {isVisible && <Button onClick={handleClick} disabled={isLoading}>{isLoading ? 'loading' : 'loadmore'}</Button>}
       {!movies.length && !isEmpty && <Text textAlign="center">Let`s begin search 🔎</Text>}
       {isLoading && <Loader />}
-      {error && <ErrorMessage /> - { error }}
-      {!isLoading && !error && < MovieList movies={movies} />}
-      {isVisible && <Button onClick={handleClick} disabled={isLoading}>{isLoading ? 'loading' : 'loadmore'}</Button>}
+      {error && <ErrorMessage />}
       {isEmpty && <Text textAlign="center">Sorry. There are no movies ... 😭</Text>}
 
     </div>

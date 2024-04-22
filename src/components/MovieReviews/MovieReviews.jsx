@@ -7,7 +7,6 @@ export default function MovieReviews({ movieId }) {
   const [reviews, setReview] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     if (!movieId) return;
 
@@ -29,7 +28,7 @@ export default function MovieReviews({ movieId }) {
     <div>
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
-      {reviews === null && <p>No reviews information available</p>}
+      {reviews.length === 0 && <p>No reviews information available</p>}
       <ul>
         {reviews.map((review) => (
           <li key={review.id}>

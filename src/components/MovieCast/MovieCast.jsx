@@ -8,10 +8,9 @@ export default function MovieCast({ movieId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-    if (!movieId) return;
     const getMovieCast = async () => {
+      if (!movieId) return;
       setIsLoading(true);
       try {
         const castData = await fetchMovieCast(movieId);
@@ -29,13 +28,14 @@ export default function MovieCast({ movieId }) {
     <div>
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
-      {cast === null && <p>No cast information available</p>}
+      {cast.length === 0 && <p>No cast information available</p>}
       <ul>
         {cast.filter(actor => actor.profile_path).map((actor, index) => (
           <li key={`${actor.id}-${index}`}>
-            <img src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
-            <p>{actor.name}</p>
-            <p>Character: {actor.character}</p>
+            <>
+              <img src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
+              <p>{actor.name}</p>
+              <p>Character: {actor.character}</p></>
           </li>
         ))}
       </ul>
