@@ -21,6 +21,7 @@
   padding-right: 40px;
   outline: 0 none;
   transition: 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+  margin-bottom: 10px;
 }
 
 .search-field:focus,

@@ -42,7 +42,7 @@ export default function HomePage() {
   return (
     <div className={css.wrap}>
       <h2 className={css.title}>Trending today</h2>
-      {movies.length && <TrendingMoviesList movies={movies} />}
+      {movies.length > 0 && <TrendingMoviesList movies={movies} />}
       {isVisible && <Button onClick={handleClick} disabled={isLoading}>{isLoading ? 'loading' : 'loadmore'}</Button>}
       {isLoading && <Loader />}
       {error && <ErrorMessage />}

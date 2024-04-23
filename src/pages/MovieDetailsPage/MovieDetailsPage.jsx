@@ -46,6 +46,7 @@ export default function MovieDetailsPage() {
     setShowMovieCast(false)
     setShowMovieReview(true)
   }
+  const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
   return (
     <>
       <Button className={css.button} type="button" onClick={goBack}>Go back</Button>
@@ -54,7 +55,11 @@ export default function MovieDetailsPage() {
         {error && <ErrorMessage />}
         <div className={css.wrap}>
           <div className={css.imgWrap}>
-            <img className={css.img} src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={title} />
+            <img className={css.img} src={
+              poster_path ?
+                (`https://image.tmdb.org/t/p/w500/${poster_path}`) :
+                defaultImg
+            } alt={title} />
           </div>
           <div>
             <h2 className={css.title}>{title}</h2>

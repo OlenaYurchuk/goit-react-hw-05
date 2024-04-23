@@ -31,14 +31,18 @@ export default function MovieCast({ movieId }) {
     getMovieCast();
   }, [movieId])
 
+  const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
   return (
     <div className={css.wrap}>
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
       <ul className={css.list}>
-        {cast.filter(actor => actor.profile_path).map((actor, index) => (
+        {cast.map((actor, index) => (
           <li className={css.item} key={`${actor.id}-${index}`}>
-            <img className={css.img} src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
+            <img className={css.img} src={
+              actor.profile_path ?
+                (`https://image.tmdb.org/t/p/w500/${actor.profile_path}`) :
+                defaultImg} alt={actor.name} />
             <div className={css.content}>
               <p className={css.name}>{actor.name}</p>
               <p className={css.character}>Character: <span className={css.role}>{actor.character}</span></p>

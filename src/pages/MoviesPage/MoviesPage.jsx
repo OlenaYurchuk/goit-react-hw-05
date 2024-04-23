@@ -55,7 +55,7 @@ export default function MoviesPage() {
   return (
     <div className={css.container}>
       <SearchBar onSearch={onHandleSubmit} />
-      {movies.length && < MovieList movies={movies} />}
+      {movies.length > 0 && < MovieList movies={movies} />}
       {isVisible && <Button onClick={handleClick} disabled={isLoading}>{isLoading ? 'loading' : 'loadmore'}</Button>}
       {!movies.length && !isEmpty && <Text textAlign="center">Let`s begin search 🔎</Text>}
       {isLoading && <Loader />}
