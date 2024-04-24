@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef, Suspense } from "react";
 import { Link, Outlet, useParams, useLocation } from "react-router-dom"
 import { fetchMovieDetails } from "../../data/movies-api";
+import { BackLink } from "../../components/BackLink/BackLink";
 import Loader from "../../components/Loader/Loader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import MovieCast from "../../components/MovieCast/MovieCast";
 import MovieReviews from "../../components/MovieReviews/MovieReviews";
-import { BackLink } from "../../components/BackLink/BackLink";
 import css from "../MovieDetailsPage/MovieDetailsPage.module.css";
 
 export default function MovieDetailsPage() {
