@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, Outlet, useParams, useLocation } from "react-router-dom"
 import { fetchMovieDetails } from "../../data/movies-api";
 import Loader from "../../components/Loader/Loader";
@@ -23,8 +23,8 @@ export default function MovieDetailsPage() {
   const [showMovieReview, setShowMovieReview] = useState(false)
 
   const location = useLocation();
-  const backLinkHref = location.state ?? "/movies";
-
+  const backLinkHref = useRef(location.state ?? "/movies"
+  )
   useEffect(() => {
     if (!id) return;
     async function fetchDetails() {
@@ -63,7 +63,7 @@ export default function MovieDetailsPage() {
   const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
   return (
     <>
-      <BackLink to={backLinkHref}></BackLink>
+      <BackLink to={backLinkHref.current}></BackLink>
       <main className={css.container}>
         {isLoading && <Loader />}
         {error && <ErrorMessage />}
@@ -75,7 +75,7 @@ export default function MovieDetailsPage() {
                 defaultImg
             } alt={title} />
           </div>
-          <div>
+          <div className={css.contentWrap}>
             <h2 className={css.title}>{title}</h2>
             <p className={css.score}>User Score: {vote_average}</p>
             <h3>Overview</h3>

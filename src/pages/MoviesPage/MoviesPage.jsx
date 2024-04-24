@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { fetchMovies } from "../../data/movies-api";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import MovieList from "../../components/MovieList/MovieList";
@@ -11,11 +12,12 @@ import css from "../MoviesPage/MoviesPage.module.css";
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") ?? "";
 
   useEffect(() => {
     if (!query) return;
@@ -37,16 +39,21 @@ export default function MoviesPage() {
       }
     }
     getMovies();
-  }, [query, page])
+  }, [page, query, searchParams])
 
 
   const onHandleSubmit = (newQuery) => {
-    setQuery(newQuery);
+    setSearchParams({ query: newQuery });
     setPage(1);
     setMovies([]);
     setIsEmpty(false);
     setError(null);
   }
+
+  // const updateQueryString = (newQuery) => {
+  //   const nextParams = newQuery !== "" ? { newQuery } : {};
+  //   setSearchParams(nextParams);
+  // };
 
   const handleClick = () => {
     setPage((prevPage) => prevPage + 1)
