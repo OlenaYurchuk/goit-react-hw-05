@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { fetchTrendingMovies } from '../../data/movies-api';
-import TrendingMoviesList from '../../components/TrendingMoviesList/TrendingMoviesList';
 import Loader from '../../components/Loader/Loader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
 import css from "../HomePage/HomePage.module.css";
+import MovieList from '../../components/MovieList/MovieList';
 
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
@@ -42,7 +42,7 @@ export default function HomePage() {
   return (
     <div className={css.wrap}>
       <h2 className={css.title}>Trending today</h2>
-      {movies.length > 0 && <TrendingMoviesList movies={movies} />}
+      {movies.length > 0 && <MovieList movies={movies} />}
       {isVisible && <Button onClick={handleClick} disabled={isLoading}>{isLoading ? 'loading' : 'loadmore'}</Button>}
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
