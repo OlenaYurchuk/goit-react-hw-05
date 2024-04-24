@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Navigation from "../Navigation/Navigation";
 import css from "../Layout/Layout.module.css";
 
@@ -7,7 +8,9 @@ export default function Layout({ children }) {
       <header className={css.header}>
         <Navigation />
       </header>
-      {children}
+      <Suspense>
+        {children}
+      </Suspense>
     </div>
   )
 }

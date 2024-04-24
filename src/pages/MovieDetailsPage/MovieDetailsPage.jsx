@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { Link, Outlet, useParams, useLocation } from "react-router-dom"
 import { fetchMovieDetails } from "../../data/movies-api";
 import Loader from "../../components/Loader/Loader";
@@ -100,8 +100,9 @@ export default function MovieDetailsPage() {
             </li>
           </ul>
         </div>
-
-        <Outlet />
+        <Suspense>
+          <Outlet />
+        </Suspense>
         {showMovieCast && <MovieCast movieId={id} />}
         {showMovieReview && <MovieReviews movieId={id} />}
       </main>
